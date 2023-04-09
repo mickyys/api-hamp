@@ -71,6 +71,15 @@ docker tag hampcl/api-hamp:1.0.0 hampcl/api-hamp:latest
 docker push hampcl/api-hamp:1.0.0 && docker push hampcl/api-hamp:latest
 ```
 
+## Tag
+```bash
+# crear tag
+git tag 1.0.0 -m "Configuration"
+
+# subir a repo
+git push origin 1.0.0
+```
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
