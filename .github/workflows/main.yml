@@ -20,9 +20,18 @@ jobs:
           MAJOR=$(echo $VERSION | cut -d. -f1 | sed 's/v//')
           MINOR=$(echo $VERSION | cut -d. -f2 | sed 's/^0*//')
           NEW_MINOR=$(expr $MINOR + 1)
-          NEW_VERSION="v$MAJOR.$(printf $NEW_MINOR).0"
+          NEW_VERSION="$MAJOR.$(printf $NEW_MINOR).0"
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
           
-      - name: create docker image
-        id: create-docker
-        run: echo ${{ steps.get-tag.outputs.new_version }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: hampcl/api-hamp:${{ steps.get-tag.outputs.new_version }},hampcl/api-hamp:latest
