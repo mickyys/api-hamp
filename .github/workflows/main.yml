@@ -35,3 +35,8 @@ jobs:
           context: .
           push: true
           tags: hampcl/api-hamp:${{ steps.get-tag.outputs.new_version }},hampcl/api-hamp:latest
+          
+      - name: Create Tags
+        run: |
+          git tag -a v${{ steps.get-tag.outputs.new_version }} -m "Versión ${{ steps.get-tag.outputs.new_version }}"
+          git push --tags
