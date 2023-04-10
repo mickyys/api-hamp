@@ -9,9 +9,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Incrementar versión del tag
-        id: version
-        run: echo ::set-output name=version::$(echo ${{ github.ref }} | sed 's/refs\/tags\/v\(.*\)/\1/' | awk -F. '{$NF++; OFS="."; print}' )
-      - name: Crear nuevo tag
-        run: git tag v${{ steps.version.outputs.version }}
+        id: get-tag
+        run: |
+          VERSION=$(git describe --abbrev=0)
+          MAJOR=$(echo $VERSION | cut -d. -f1 | sed 's/v//')
+          MINOR=$(echo $VERSION | cut -d. -f2)
+          PATCH=$(echo $VERSION | cut -d. -f3)
+          NEW_VERSION="v$MAJOR.$(expr $MINOR + 1).0"
+          echo "name=new_version::$NEW_VERSION" >> $GITHUB_OUTPUT
       - name: tag
-        run: echo ${{ steps.version.outputs.version }}
+        run: echo ==== ${{ steps.get-tag.outputs.new_version }}
