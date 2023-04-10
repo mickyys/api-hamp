@@ -8,8 +8,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Get tag
-        id: tag
-        run: echo ::set-output name=tag::$(git describe --tags --abbrev=0)
+      - name: Incrementar versión del tag
+        id: version
+        run: echo ::set-output name=version::$(echo ${{ github.ref }} | sed 's/refs\/tags\/v\(.*\)/\1/' | awk -F. '{$NF++; OFS="."; print}' )
+      - name: Crear nuevo tag
+        run: git tag v${{ steps.version.outputs.version }}
       - name: tag
-        run: echo ${{ steps.tag.outputs.tag }}
+        run: echo ${{ steps.version.outputs.version }}
