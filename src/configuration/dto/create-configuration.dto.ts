@@ -1,4 +1,10 @@
-import { IsBoolean, IsDate, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsDate,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateConfigurationDto {
   @IsString()
@@ -13,4 +19,7 @@ export class CreateConfigurationDto {
 
   @IsDate()
   readonly expiredDate: Date;
+
+  @IsNumber()
+  readonly alertDays: number;
 }

@@ -3,17 +3,20 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class Configuration extends Document {
-  @Prop()
+  @Prop({ required: true, unique: true })
   id: string;
 
-  @Prop()
+  @Prop({ required: true, unique: true })
   name: string;
 
-  @Prop()
+  @Prop({ required: true })
   expiredDate: Date;
 
-  @Prop()
+  @Prop({ required: true })
   enabled: boolean;
+
+  @Prop({ default: 7 })
+  alertDays: number;
 }
 
 export const ConfigurationSchema = SchemaFactory.createForClass(Configuration);
