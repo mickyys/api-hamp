@@ -13,9 +13,9 @@ jobs:
         run: |
           VERSION=$(git describe --abbrev=0)
           MAJOR=$(echo $VERSION | cut -d. -f1 | sed 's/v//')
-          MINOR=$(echo $VERSION | cut -d. -f2)
-          PATCH=$(echo $VERSION | cut -d. -f3)
-          NEW_VERSION="v$MAJOR.$(expr $MINOR + 1).0"
-          echo "name=new_version::$NEW_VERSION" >> $GITHUB_OUTPUT
+          MINOR=$(echo $VERSION | cut -d. -f2 | sed 's/^0*//')
+          NEW_MINOR=$(expr $MINOR + 1)
+          NEW_VERSION="v$MAJOR.$(printf "%02d" $NEW_MINOR).0"
+          echo "::set-output name=new_version::$NEW_VERSION"
       - name: tag
         run: echo ==== ${{ steps.get-tag.outputs.new_version }}
