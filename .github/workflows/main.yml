@@ -5,7 +5,7 @@ on:
       - master
 
 jobs:
-  get-tag:
+  build-docker-tag:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -38,5 +38,7 @@ jobs:
           
       - name: Create Tags
         run: |
+          git config --global user.email "github@hamp.cl"
+          git config --global user.name "Hamp Github Actions"
           git tag -a v${{ steps.get-tag.outputs.new_version }} -m "Versión ${{ steps.get-tag.outputs.new_version }}"
           git push --tags
