@@ -10,10 +10,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+         submodules: true
+         fetch-depth: 0
       - name: Incrementar versión del tag
         id: get-tag
         run: |
-          VERSION=$(git describe --tags)
+          VERSION=$(git describe --abbrev=0)
           echo "version:  $VERSION"
           MAJOR=$(echo $VERSION | cut -d. -f1 | sed 's/v//')
           MINOR=$(echo $VERSION | cut -d. -f2 | sed 's/^0*//')
