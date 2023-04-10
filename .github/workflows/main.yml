@@ -21,4 +21,8 @@ jobs:
           MINOR=$(echo $VERSION | cut -d. -f2 | sed 's/^0*//')
           NEW_MINOR=$(expr $MINOR + 1)
           NEW_VERSION="v$MAJOR.$(printf $NEW_MINOR).0"
-          echo "new_version:  $NEW_VERSION"
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          
+      - name: create docker image
+        id: create-docker
+        run: echo ${{ steps.get-tag.outputs.new_version }}
