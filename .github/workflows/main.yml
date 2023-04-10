@@ -14,8 +14,9 @@ jobs:
         id: get-tag
         run: |
           VERSION=$(git describe --always)
+          echo "version:  $VERSION"
           MAJOR=$(echo $VERSION | cut -d. -f1 | sed 's/v//')
           MINOR=$(echo $VERSION | cut -d. -f2 | sed 's/^0*//')
           NEW_MINOR=$(expr $MINOR + 1)
           NEW_VERSION="v$MAJOR.$(printf "%02d" $NEW_MINOR).0"
-          echo "$NEW_VERSION"
+          echo "new_version:  $NEW_VERSION"
