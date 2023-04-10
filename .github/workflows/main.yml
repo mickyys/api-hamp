@@ -11,7 +11,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-         submodules: true
          fetch-depth: 0
       - name: Incrementar versión del tag
         id: get-tag
@@ -21,5 +20,5 @@ jobs:
           MAJOR=$(echo $VERSION | cut -d. -f1 | sed 's/v//')
           MINOR=$(echo $VERSION | cut -d. -f2 | sed 's/^0*//')
           NEW_MINOR=$(expr $MINOR + 1)
-          NEW_VERSION="v$MAJOR.$(printf "%02d" $NEW_MINOR).0"
+          NEW_VERSION="v$MAJOR.$(printf $NEW_MINOR).0"
           echo "new_version:  $NEW_VERSION"
