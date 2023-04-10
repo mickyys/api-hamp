@@ -13,7 +13,7 @@ jobs:
       - name: Incrementar versión del tag
         id: get-tag
         run: |
-          VERSION=$(git describe --always --abbrev=0)
+          VERSION=$(git describe --tags)
           echo "version:  $VERSION"
           MAJOR=$(echo $VERSION | cut -d. -f1 | sed 's/v//')
           MINOR=$(echo $VERSION | cut -d. -f2 | sed 's/^0*//')
